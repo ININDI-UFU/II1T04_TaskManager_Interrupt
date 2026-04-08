@@ -100,6 +100,7 @@ class _PresentationScreenState extends State<PresentationScreen>
     _badgeCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
+      value: 1.0,
     );
   }
 
@@ -287,9 +288,8 @@ class _PresentationScreenState extends State<PresentationScreen>
               top: 16,
               left: 16,
               child: ScaleTransition(
-                scale: CurvedAnimation(
-                  parent: _badgeCtrl,
-                  curve: Curves.elasticOut,
+                scale: Tween<double>(begin: 0.8, end: 1.0).animate(
+                  CurvedAnimation(parent: _badgeCtrl, curve: Curves.elasticOut),
                 ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
