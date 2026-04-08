@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter_highlight/themes/vs2015.dart';
 
 // ── Cores do Design System (da apresentação original) ─────────────────────
 const kPurple = Color(0xFF6C63FF);
@@ -248,24 +250,38 @@ class GlassCard extends StatelessWidget {
 // ── Code Block ────────────────────────────────────────────────────────────
 class CodeBlock extends StatelessWidget {
   final String code;
+  final String language;
   final Color accentColor;
   final String? label;
   final double fontSize;
   const CodeBlock({
     super.key,
     required this.code,
+    this.language = 'cpp',
     this.accentColor = kPurple,
     this.label,
     this.fontSize = 12,
   });
 
+  static const _langMap = {
+    'cpp': 'arduino',
+    'c': 'arduino',
+    'arduino': 'arduino',
+    'python': 'python',
+    'json': 'json',
+    'yaml': 'yaml',
+    'bash': 'bash',
+    'shell': 'bash',
+    'javascript': 'javascript',
+    'ini': 'ini',
+  };
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF0D0E16),
+        color: const Color(0xFF1E1E1E),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: accentColor.withValues(alpha: 0.3), width: 1),
       ),
@@ -275,7 +291,7 @@ class CodeBlock extends StatelessWidget {
         children: [
           if (label != null)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(left: 16, top: 12),
               child: Text(
                 label!,
                 style: TextStyle(
@@ -286,13 +302,18 @@ class CodeBlock extends StatelessWidget {
                 ),
               ),
             ),
-          Text(
-            code,
-            style: TextStyle(
-              fontFamily: 'Consolas',
-              fontSize: fontSize,
-              color: kTextSecondary,
-              height: 1.5,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: HighlightView(
+              code,
+              language: _langMap[language] ?? language,
+              theme: vs2015Theme,
+              padding: const EdgeInsets.all(16),
+              textStyle: TextStyle(
+                fontFamily: 'Courier New',
+                fontSize: fontSize,
+                height: 1.5,
+              ),
             ),
           ),
         ],

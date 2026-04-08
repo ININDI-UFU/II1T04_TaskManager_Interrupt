@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   web: ^1.1.0
   cupertino_icons: ^1.0.8
+  flutter_highlight: ^0.7.0
+  highlight: ^0.7.0
 
 dev_dependencies:
   flutter_test:
